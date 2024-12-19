@@ -5,5 +5,4 @@ from app.models.user import User
 class Index(Resource):
 
   def get(self):
-    users = User.query.all()
-    return [user.email for user in users]
+    return { 'message': 'Welcome to smartglass' }
