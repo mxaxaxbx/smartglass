@@ -1,0 +1,8 @@
+gunicorn==21.2.0
+Flask==3.0.0
+Flask-RESTful==0.3.10
+Flask-Cors==4.0.0
+python-dotenv==1.0.0
+Flask-SQLAlchemy==3.1.1
+psycopg2-binary==2.9.10
+sqlalchemy-cockroachdb==2.0.2
