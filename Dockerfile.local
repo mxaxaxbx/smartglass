@@ -13,8 +13,11 @@ RUN pip install -r requirements.txt
 # Copy the rest of the application code into the container
 COPY . .
 
+# add the environment variable
+ENV FLASK_DEBUG=1
+
 # Expose the port the app runs on
 EXPOSE 5000
 
-# Define the command to run the application
-CMD ["gunicorn", "main:app", "--bind", "0.0.0.0:8080"]
+# Define the command to run the application - live reload
+CMD ["gunicorn", "main:app", "--bind", "0.0.0.0:8080", "--reload"]
