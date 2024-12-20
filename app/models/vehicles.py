@@ -12,3 +12,11 @@ class Vehicle(db.Model):
   def save(self):
     db.session.add(self)
     db.session.commit()
+
+  def serialize(self):
+    return {
+      'id': str(self.id),
+      'brand': self.brand,
+      'model': self.model,
+      'year': self.year
+    }

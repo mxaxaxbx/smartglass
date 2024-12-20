@@ -2,7 +2,12 @@ from flask_restful import Resource, request
 
 from app.models.vehicles import Vehicle
 
-class Vehicles(Resource):
+class VehiclesHandler(Resource):
+
+  def get(self):
+    vehicles = Vehicle.query.all()
+    vehicles = [vehicle.serialize() for vehicle in vehicles]
+    return vehicles
 
   """
   Request
@@ -14,7 +19,6 @@ class Vehicles(Resource):
     { 'brand': 'Toyota', 'model': 'Prado', 'year': 2019 },
   ]
   """
-
   def post(self):
     data = request.get_json()
 
