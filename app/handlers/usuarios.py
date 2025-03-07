@@ -46,7 +46,7 @@ class UserIDHandler(Resource):
     if(users2 is not None):
       users2 = users2.serialize()
     else:
-      users2 = {'error': 'No existe el usuario'}, 404
+      users2 = {'error': 'No existe el usuario prueba'}, 404
     return users2
   
 
