@@ -2,6 +2,8 @@ from flask_restful import Resource, request
 
 from app.models.user import User
 from time import time
+import bcrypt
+
 
 class UserHandler(Resource):
 
@@ -16,15 +18,26 @@ class UserHandler(Resource):
   def post(self):
     data = request.get_json()
     created = int(time())
+    hashed_password = self.hash_password(data['password'])
 
     #for item in data:
     user = User(primer_nombre=data['primer_nombre'], segundo_nombre=data['segundo_nombre'], 
                   primer_apellido=data['primer_apellido'], segundo_apellido=data['segundo_apellido'], active=data['active'],
                     superuser=data['superuser'], created=created, update=None, lastlogin=None, 
-                    email=data['email'], password=data['password'])
-    user.save()
+                    email=data['email'], password=hashed_password)
+    #user.save()
+    isValid = self.verify_password("123456789","$2b$12$FbTPGvVyGdsj75YWBMSgleENXqiY/eFyONBXfGI89ljNCxFVlDF7G")
+    print("isValid",isValid)
 
-    return { 'message': 'Usuario created successfully' }
+    return { 'message': isValid }
+  
+  def hash_password(self, password: str) -> str:
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(password.encode(), salt)
+    return hashed_password.decode()
+
+  def verify_password(self, password: str, hashed_password: str) -> bool:
+    return bcrypt.checkpw(password.encode(), hashed_password.encode())
 
 class UserIDHandler(Resource):
 
@@ -35,6 +48,7 @@ class UserIDHandler(Resource):
     else:
       users2 = {'error': 'No existe el usuario'}, 404
     return users2
+  
 
 
   """
