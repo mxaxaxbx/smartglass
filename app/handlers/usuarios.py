@@ -3,18 +3,23 @@ from flask_restful import Resource, request
 from app.models.user import User
 from time import time
 import bcrypt
+from flask_jwt_extended import create_access_token, jwt_required
+
 
 
 class UserHandler(Resource):
 
+  @jwt_required()
   def get(self):
     users = User.query.all()
     users2 = [user.serialize() for user in users]
     return users2
   
+  @jwt_required()
   def put(self):
     users = User.query.all()
 
+  @jwt_required()
   def post(self):
     data = request.get_json()
     created = int(time())
@@ -25,22 +30,18 @@ class UserHandler(Resource):
                   primer_apellido=data['primer_apellido'], segundo_apellido=data['segundo_apellido'], active=data['active'],
                     superuser=data['superuser'], created=created, update=None, lastlogin=None, 
                     email=data['email'], password=hashed_password)
-    #user.save()
-    isValid = self.verify_password("123456789","$2b$12$FbTPGvVyGdsj75YWBMSgleENXqiY/eFyONBXfGI89ljNCxFVlDF7G")
-    print("isValid",isValid)
+    user.save()
 
-    return { 'message': isValid }
+    return { 'message': 'User created successfully' }
   
   def hash_password(self, password: str) -> str:
     salt = bcrypt.gensalt()
     hashed_password = bcrypt.hashpw(password.encode(), salt)
     return hashed_password.decode()
-
-  def verify_password(self, password: str, hashed_password: str) -> bool:
-    return bcrypt.checkpw(password.encode(), hashed_password.encode())
+  
 
 class UserIDHandler(Resource):
-
+  @jwt_required()
   def get(self, user_id=None):
     users2 = User.query.get(user_id)
     if(users2 is not None):
@@ -50,25 +51,34 @@ class UserIDHandler(Resource):
     return users2
   
 
+class UserLogin(Resource):
 
-  """
-  Request
-  [
-    { 'brand': 'Toyota', 'model': 'Corolla', 'year': 2019 },
-    { 'brand': 'Toyota', 'model': 'Yaris', 'year': 2019 },
-    { 'brand': 'Toyota', 'model': 'Hilux', 'year': 2019 },
-    { 'brand': 'Toyota', 'model': 'Fortuner', 'year': 2019 },
-    { 'brand': 'Toyota', 'model': 'Prado', 'year': 2019 },
-  ]
-  """
-
-  """
   def post(self):
+
     data = request.get_json()
+    email = data['email']
+    password = data['password']
 
-    for item in data:
-      vehicle = Vehicle(brand=item['brand'], model=item['model'], year=item['year'])
-      vehicle.save()
+    users = User.query.filter_by(email=email)
 
-    return { 'message': 'Vehicles created successfully' }
-    """
+    isValid = False
+
+    if(users.count() > 0):
+      user = users[0]
+
+      isValid = self.verify_password(password, user.password)
+
+      if(isValid):
+        access_token = create_access_token(identity=str(user.userid))
+        rt_data = { 'access_token': access_token}
+      else:
+        rt_data = { 'message': "Contraseña incorrecta" }, 401
+
+    else:
+      rt_data = { 'message': "Usuario no existe" }, 401
+
+    return rt_data
+  
+  def verify_password(self, password: str, hashed_password: str) -> bool:
+    return bcrypt.checkpw(password.encode(), hashed_password.encode())
+  
