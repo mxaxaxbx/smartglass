@@ -18,6 +18,7 @@ class UserHandler(Resource):
   @jwt_required()
   def put(self):
     users = User.query.all()
+    return { 'message': 'User update successfully' }
 
   @jwt_required()
   def post(self):
