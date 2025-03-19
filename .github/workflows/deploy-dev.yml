@@ -17,6 +17,8 @@ jobs:
         name: create .env file
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
           printenv > .env
 
