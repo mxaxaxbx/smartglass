@@ -2,12 +2,13 @@ from flask import Flask, jsonify, request
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required
+from flask_cors import CORS
 
 from os import getenv, environ
 
-print("environ", environ)
-
 app = Flask(__name__)
+
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 database_uri = getenv('DATABASE_URL')
 print("database_uri", database_uri)
@@ -32,6 +33,3 @@ for resource, route in ROUTES:
   api.add_resource(resource, route)
 
 app.register_blueprint(api_bp, url_prefix='/api')
-
-
-
