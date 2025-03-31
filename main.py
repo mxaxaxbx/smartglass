@@ -10,11 +10,10 @@ import logging as log
 
 log.basicConfig(level=log.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
-@app.after_request
-def after_request(response):
-  response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-  response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-  return response
+@app.before_request
+def validate_options_request(request):
+  if request.method == 'OPTIONS':
+    return '', 204
 
 def main():
   def handle_exit(signum, frame):
