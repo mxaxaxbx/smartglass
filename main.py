@@ -1,3 +1,4 @@
+from flask import request
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -11,7 +12,7 @@ import logging as log
 log.basicConfig(level=log.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 @app.before_request
-def validate_options_request(request):
+def validate_options_request():
   if request.method == 'OPTIONS':
     return '', 204
 
