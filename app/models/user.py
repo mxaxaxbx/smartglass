@@ -3,7 +3,7 @@ from app import db
 class User(db.Model):
 
   __tablename__ = 'usuarios'
-  __table_args__ = {'schema': 'Smart_Glass'}  # Esquema específico
+  __table_args__ = {'schema': 'smartglass'}  # Esquema específico
 
   userid = db.Column(db.Integer, primary_key=True)
   primer_nombre = db.Column(db.String(120), nullable=False)
