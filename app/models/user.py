@@ -17,6 +17,8 @@ class User(db.Model):
   lastlogin = db.Column(db.Integer, nullable=False)
   email = db.Column(db.String(120), nullable=False)
   password = db.Column(db.String(120), nullable=False)
+  idrol = db.Column(db.Integer, nullable=False)
+  idarea = db.Column(db.Integer, nullable=False)
 
   def serialize(self):
     return {
@@ -25,13 +27,14 @@ class User(db.Model):
       'segundo_nombre': self.segundo_nombre,
       'primer_apellido': self.primer_apellido,
       'segundo_apellido': self.segundo_apellido,
+      'email': self.email,
+      'idrol': self.idrol,
+      'idarea': self.idarea,
       'active': self.active,
       'superuser': self.superuser,
       'created': self.created,
       'update': self.update,
-      'lastlogin': self.lastlogin,
-      'email': self.email,
-      'password': self.password
+      'lastlogin': self.lastlogin
     }
   
   def save(self):
