@@ -3,7 +3,7 @@ from flask_restful import Resource, request
 from app.models.user import User
 from time import time
 import bcrypt
-from flask_jwt_extended import create_access_token, jwt_required
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 
 
@@ -50,7 +50,17 @@ class UserIDHandler(Resource):
     else:
       users2 = {'error': 'No existe el usuario prueba'}, 404
     return users2
-  
+
+class CurrentUserHandler(Resource):
+  @jwt_required()
+  def get(self):
+    userid = get_jwt_identity()
+    users2 = User.query.get(userid)
+    if(users2 is not None):
+      users2 = users2.serialize()
+    else:
+      users2 = {'error': 'No existe el usuario logueado.'}, 404
+    return users2
 
 class UserLogin(Resource):
 
