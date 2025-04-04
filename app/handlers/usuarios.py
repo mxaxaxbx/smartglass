@@ -5,8 +5,6 @@ from time import time
 import bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
-
-
 class UserHandler(Resource):
 
   @jwt_required()
@@ -17,8 +15,44 @@ class UserHandler(Resource):
   
   @jwt_required()
   def put(self):
-    users = User.query.all()
-    return { 'message': 'User update successfully' }
+    data = request.json  # Datos enviados en la solicitud
+    msg = ""
+
+    if "userid" in data:
+      l_user = User.query.get(data["userid"])
+      if(l_user is not None):
+            # Actualizar solo si el dato es proporcionado
+        if "primer_nombre" in data:
+            l_user.primer_nombre = data["primer_nombre"]
+        if "segundo_nombre" in data:
+            l_user.segundo_nombre = data["segundo_nombre"]
+        if "primer_apellido" in data:
+            l_user.primer_apellido = data["primer_apellido"]
+        if "segundo_apellido" in data:
+            l_user.segundo_apellido = data["segundo_apellido"]
+        if "email" in data:
+            l_user.email = data["email"]
+        if "password" in data:
+            l_user.password = self.hash_password(data['password'])
+        if "idrol" in data:
+            l_user.idrol = data["idrol"]
+        if "idarea" in data:
+            l_user.idarea = data["idarea"]
+        if "active" in data:
+            l_user.active = data["active"]
+        if "superuser" in data:
+            l_user.superuser = data["superuser"]
+
+        l_user.update = int(time())
+        
+        l_user.put()
+        msg = {'message': 'Usuario actualizado correctamente.'}
+      else:
+        msg = {'error': 'No existe el usuario a actualizar.'}, 404
+    else:
+      msg = {'error': 'No existe atributo "userid" en payload enviado.'}, 404
+
+    return msg
 
   @jwt_required()
   def post(self):
@@ -81,6 +115,8 @@ class UserLogin(Resource):
 
       if(isValid):
         access_token = create_access_token(identity=str(user.userid))
+        user.lastlogin = int(time())
+        user.put()
         rt_data = { 'access_token': access_token}
       else:
         rt_data = { 'message': "Contraseña incorrecta" }, 401
