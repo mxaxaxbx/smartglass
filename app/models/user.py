@@ -40,3 +40,6 @@ class User(db.Model):
   def save(self):
     db.session.add(self)
     db.session.commit()
+  
+  def put(self):
+    db.session.commit()
