@@ -1,0 +1,106 @@
+from flask_restful import Resource, request
+
+from app.models.rol import Rol
+from time import time
+from flask_jwt_extended import jwt_required, get_jwt_identity
+
+class RolHandler(Resource):
+
+  @jwt_required()
+  def get(self):
+    roles = Rol.query.all()
+    rol = [rol.serialize() for rol in roles]
+    return rol
+  
+  @jwt_required()
+  def put(self):
+    data = request.json  # Datos enviados en la solicitud
+    msg = ""
+
+    if "idrol" in data:
+      l_rol = Rol.query.get(data["idrol"])
+      if(l_rol is not None):
+            # Actualizar solo si el dato es proporcionado
+        if "nombre" in data:
+            l_rol.nombre = data["nombre"]
+        if "endpoint" in data:
+            l_rol.endpoint = data["endpoint"]
+
+        l_rol.update = int(time())
+        
+        l_rol.put()
+        msg = {'message': 'Rol actualizado correctamente.'}
+      else:
+        msg = {'error': 'No existe el rol a actualizar.'}, 404
+    else:
+      msg = {'error': 'No existe atributo "idrol" en payload enviado.'}, 404
+
+    return msg
+
+  @jwt_required()
+  def post(self):
+    data = request.get_json()
+    created = int(time())
+
+    #for item in data:
+    rol = Rol(nombre=data['nombre'], endpoint=data['endpoint'], created=created, update=None)
+    rol.save()
+
+    return { 'message': 'Rol Creado correctamente' }
+  
+
+  
+"""class UserIDHandler(Resource):
+  @jwt_required()
+  def get(self, user_id=None):
+    users2 = User.query.get(user_id)
+    if(users2 is not None):
+      users2 = users2.serialize()
+    else:
+      users2 = {'error': 'No existe el usuario prueba'}, 404
+    return users2
+
+class CurrentUserHandler(Resource):
+  @jwt_required()
+  def get(self):
+    userid = get_jwt_identity()
+    users2 = User.query.get(userid)
+    if(users2 is not None):
+      users2 = users2.serialize()
+    else:
+      users2 = {'error': 'No existe el usuario logueado.'}, 404
+    return users2
+
+class UserLogin(Resource):
+
+  def post(self):
+
+    data = request.get_json()
+    email = data['email']
+    password = data['password']
+
+    users = User.query.filter_by(email=email)
+
+    isValid = False
+
+    if(users.count() > 0):
+      user = users[0]
+
+      isValid = self.verify_password(password, user.password)
+
+      if(isValid):
+        access_token = create_access_token(identity=str(user.userid))
+        user.lastlogin = int(time())
+        user.put()
+        rt_data = { 'access_token': access_token}
+      else:
+        rt_data = { 'message': "Contraseña incorrecta" }, 401
+
+    else:
+      rt_data = { 'message': "Usuario no existe" }, 401
+
+    return rt_data
+  
+  def verify_password(self, password: str, hashed_password: str) -> bool:
+    return bcrypt.checkpw(password.encode(), hashed_password.encode())
+  """
