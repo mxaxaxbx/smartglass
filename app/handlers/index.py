@@ -1,6 +1,6 @@
 from flask_restful import Resource
 
-from app.models.user import User
+from app.models.usuario import Usuario
 
 class IndexHandler(Resource):
 
