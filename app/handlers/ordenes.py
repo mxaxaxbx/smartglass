@@ -9,8 +9,8 @@ class OrdenHandler(Resource):
   @jwt_required()
   def get(self):
     ordenes = Orden.query.all()
-    orden = [orden.serialize() for orden in ordenes]
-    return orden
+    orden_js = [orden.serialize() for orden in ordenes]
+    return orden_js
   
   @jwt_required()
   def put(self):
@@ -18,19 +18,19 @@ class OrdenHandler(Resource):
     msg = ""
 
     if "ordenid" in data:
-      l_orden = Orden.query.get(data["ordenid"])
-      if(l_orden is not None):
+      lo_orden = Orden.query.get(data["ordenid"])
+      if(lo_orden is not None):
             # Actualizar solo si el dato es proporcionado
         if "fechapedido" in data:
-            l_orden.fechapedido = data["fechapedido"]
+            lo_orden.fechapedido = data["fechapedido"]
         if "cliente" in data:
-            l_orden.cliente = data["cliente"]
+            lo_orden.cliente = data["cliente"]
         if "torrecliente" in data:
-            l_orden.torrecliente = data["torrecliente"]
+            lo_orden.torrecliente = data["torrecliente"]
 
-        l_orden.update = int(time())
+        lo_orden.update = int(time())
         
-        l_orden.put()
+        lo_orden.put()
         msg = {'message': 'Orden actualizado correctamente.'}
       else:
         msg = {'error': 'No existe la orden a actualizar.'}, 404
@@ -45,8 +45,8 @@ class OrdenHandler(Resource):
     created = int(time())
 
     #for item in data:
-    orden = Orden(fechapedido=data['fechapedido'], cliente=data['cliente'], torrecliente=data['torrecliente'], created=created, update=None)
-    orden.save()
+    lo_orden = Orden(fechapedido=data['fechapedido'], cliente=data['cliente'], torrecliente=data['torrecliente'], created=created, update=None)
+    lo_orden.save()
 
     return { 'message': 'Orden Creado correctamente' }
   
