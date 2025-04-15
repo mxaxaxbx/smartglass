@@ -6,6 +6,7 @@ from app.handlers.usuarios import UserIDHandler;
 from app.handlers.usuarios import UserLogin;
 from app.handlers.usuarios import CurrentUserHandler;
 from app.handlers.roles import RolHandler;
+from app.handlers.ordenes import OrdenHandler;
 #from app.handlers.vehicles import VehiclesHandler
 #from app.handlers.part_types import PartTypesHandler
 
@@ -16,7 +17,8 @@ ROUTES = [
   (UserHandler, '/usuarios'),
   (UserIDHandler, '/usuarios/<int:user_id>'),
   (CurrentUserHandler, '/usuarios/current'),  
-  (RolHandler, '/roles')
+  (RolHandler, '/roles'),
+  (OrdenHandler, '/ordenes')
   #(VehiclesHandler, '/vehicles'),
   #(PartTypesHandler, '/part_types')
 ]
