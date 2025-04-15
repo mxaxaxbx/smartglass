@@ -11,7 +11,18 @@ class OrdenHandler(Resource):
     ordenes = Orden.query.all()
     orden_js = [orden.serialize() for orden in ordenes]
     return orden_js
-  
+
+  @jwt_required()
+  def post(self):
+    data = request.get_json()
+    created = int(time())
+
+    #for item in data:
+    lo_orden = Orden(fechapedido=data['fechapedido'], cliente=data['cliente'], torrecliente=data['torrecliente'], created=created, update=None)
+    lo_orden.save()
+
+    return { 'message': 'Orden Creado correctamente' }
+    
   @jwt_required()
   def put(self):
     data = request.json  # Datos enviados en la solicitud
@@ -38,18 +49,6 @@ class OrdenHandler(Resource):
       msg = {'error': 'No existe atributo "ordenid" en payload enviado.'}, 404
 
     return msg
-
-  @jwt_required()
-  def post(self):
-    data = request.get_json()
-    created = int(time())
-
-    #for item in data:
-    lo_orden = Orden(fechapedido=data['fechapedido'], cliente=data['cliente'], torrecliente=data['torrecliente'], created=created, update=None)
-    lo_orden.save()
-
-    return { 'message': 'Orden Creado correctamente' }
-  
 
 """class UserIDHandler(Resource):
   @jwt_required()
