@@ -9,8 +9,8 @@ class RolHandler(Resource):
   @jwt_required()
   def get(self):
     roles = Rol.query.all()
-    rol = [rol.serialize() for rol in roles]
-    return rol
+    rol_js = [rol.serialize() for rol in roles]
+    return rol_js
   
   @jwt_required()
   def put(self):
@@ -18,17 +18,17 @@ class RolHandler(Resource):
     msg = ""
 
     if "idrol" in data:
-      l_rol = Rol.query.get(data["idrol"])
-      if(l_rol is not None):
+      lo_rol = Rol.query.get(data["idrol"])
+      if(lo_rol is not None):
             # Actualizar solo si el dato es proporcionado
         if "nombre" in data:
-            l_rol.nombre = data["nombre"]
+            lo_rol.nombre = data["nombre"]
         if "endpoint" in data:
-            l_rol.endpoint = data["endpoint"]
+            lo_rol.endpoint = data["endpoint"]
 
-        l_rol.update = int(time())
+        lo_rol.update = int(time())
         
-        l_rol.put()
+        lo_rol.put()        
         msg = {'message': 'Rol actualizado correctamente.'}
       else:
         msg = {'error': 'No existe el rol a actualizar.'}, 404
@@ -43,8 +43,8 @@ class RolHandler(Resource):
     created = int(time())
 
     #for item in data:
-    rol = Rol(nombre=data['nombre'], endpoint=data['endpoint'], created=created, update=None)
-    rol.save()
+    lo_rol = Rol(nombre=data['nombre'], endpoint=data['endpoint'], created=created, update=None)
+    lo_rol.save()
 
     return { 'message': 'Rol Creado correctamente' }
   
