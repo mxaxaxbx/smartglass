@@ -7,8 +7,8 @@ from app.handlers.usuarios import UserLogin;
 from app.handlers.usuarios import CurrentUserHandler;
 from app.handlers.roles import RolHandler;
 from app.handlers.ordenes import OrdenHandler;
-from app.handlers.vehiculos import VehiculoHandler
-#from app.handlers.part_types import PartTypesHandler
+from app.handlers.vehiculos import VehiculoHandler;
+from app.handlers.tipo_piezas import TipoPiezasHandler;
 
 
 ROUTES = [
@@ -19,8 +19,8 @@ ROUTES = [
   (CurrentUserHandler, '/usuarios/current'),  
   (RolHandler, '/roles'),
   (OrdenHandler, '/ordenes'),
-  (VehiculoHandler, '/vehiculos')
-  #(PartTypesHandler, '/part_types')
+  (VehiculoHandler, '/vehiculos'),
+  (TipoPiezasHandler, '/tipos_piezas')
 ]
 
 api_bp = Blueprint('api', __name__)
