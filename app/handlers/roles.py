@@ -11,6 +11,17 @@ class RolHandler(Resource):
     roles = Rol.query.all()
     rol_js = [rol.serialize() for rol in roles]
     return rol_js
+
+  @jwt_required()
+  def post(self):
+    data = request.get_json()
+    created = int(time())
+
+    #for item in data:
+    lo_rol = Rol(nombre=data['nombre'], endpoint=data['endpoint'], created=created, update=None)
+    lo_rol.save()
+
+    return { 'message': 'Rol Creado correctamente' }
   
   @jwt_required()
   def put(self):
@@ -36,19 +47,7 @@ class RolHandler(Resource):
       msg = {'error': 'No existe atributo "idrol" en payload enviado.'}, 404
 
     return msg
-
-  @jwt_required()
-  def post(self):
-    data = request.get_json()
-    created = int(time())
-
-    #for item in data:
-    lo_rol = Rol(nombre=data['nombre'], endpoint=data['endpoint'], created=created, update=None)
-    lo_rol.save()
-
-    return { 'message': 'Rol Creado correctamente' }
   
-
   
 """class UserIDHandler(Resource):
   @jwt_required()
