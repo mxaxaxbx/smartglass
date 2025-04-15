@@ -9,6 +9,9 @@ from app.handlers.roles import RolHandler;
 from app.handlers.ordenes import OrdenHandler;
 from app.handlers.vehiculos import VehiculoHandler;
 from app.handlers.tipo_piezas import TipoPiezasHandler;
+from app.handlers.tipo_solicitudes import TipoSolicitudesHandler;
+from app.handlers.rutasproduccion import RutasProduccionHandler;
+from app.handlers.piezas import PiezasHandler;
 
 
 ROUTES = [
@@ -20,7 +23,10 @@ ROUTES = [
   (RolHandler, '/roles'),
   (OrdenHandler, '/ordenes'),
   (VehiculoHandler, '/vehiculos'),
-  (TipoPiezasHandler, '/tipos_piezas')
+  (TipoPiezasHandler, '/tipospiezas'),
+  (TipoSolicitudesHandler, '/tipossolicitudes'),
+  (RutasProduccionHandler, '/rutasproduccion'),
+  (PiezasHandler, '/piezas'),
 ]
 
 api_bp = Blueprint('api', __name__)
