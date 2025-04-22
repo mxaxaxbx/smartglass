@@ -1,0 +1,35 @@
+from app import db
+
+class Proceso(db.Model):
+
+  __tablename__ = 'procesos'
+  __table_args__ = {'schema': 'smartglass'}  # Esquema específico
+
+  idproceso = db.Column(db.Integer, primary_key=True)
+  idpieza = db.Column(db.Integer, nullable=False)
+  estado = db.Column(db.String(120), nullable=False)
+  fechainicial = db.Column(db.Integer, nullable=False)
+  fechafinal = db.Column(db.Integer, nullable=False)
+  notas = db.Column(db.String(120), nullable=False)
+
+  created = db.Column(db.Integer, nullable=False)
+  update = db.Column(db.Integer, nullable=False)
+
+  def serialize(self):
+    return {
+      'idproceso': str(self.idproceso),
+      'idpieza': str(self.idpieza),
+      'estado': self.estado,
+      'fechainicial': self.fechainicial,
+      'fechafinal': self.fechafinal,
+      'notas': self.notas,
+      'created': self.created,
+      'update': self.update
+    }
+  
+  def save(self):
+    db.session.add(self)
+    db.session.commit()
+     
+  def put(self):
+    db.session.commit()
