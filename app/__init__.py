@@ -22,6 +22,7 @@ jwt_secret_key = getenv('JWT_SECRET_KEY')
 app.config['SECRET_KEY'] = secret_key
 app.config["JWT_SECRET_KEY"] = jwt_secret_key
 app.config['JWT_TOKEN_LOCATION'] = ['headers']
+app.config['PROPAGATE_EXCEPTIONS'] = True  # Propagate exceptions to the client
 
 jwt = JWTManager(app)
 
@@ -33,3 +34,5 @@ for resource, route in ROUTES:
   api.add_resource(resource, route)
 
 app.register_blueprint(api_bp, url_prefix='/api')
+
+api.handle_errors = False # Disable Flask-RESTful 
