@@ -4,6 +4,7 @@ from app.models.usuario import Usuario
 from time import time
 import bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from datetime import timedelta
 
 class UsuarioHandler(Resource):
 
@@ -114,7 +115,8 @@ class UserLogin(Resource):
       isValid = self.verify_password(password, lo_user.password)
 
       if(isValid):
-        access_token = create_access_token(identity=str(lo_user.userid))
+        expires = timedelta(minutes=60)
+        access_token = create_access_token(identity=str(lo_user.userid), expires_delta=expires)
         lo_user.lastlogin = int(time())
         lo_user.put()
         rt_data = { 'access_token': access_token}
