@@ -52,14 +52,13 @@ class VehiculoHandler(Resource):
     return msg
   
 
-"""class UserIDHandler(Resource):
+class VehiculoIDHandler(Resource):
   @jwt_required()
-  def get(self, user_id=None):
-    users2 = User.query.get(user_id)
-    if(users2 is not None):
-      users2 = users2.serialize()
+  def get(self, idvehiculo=None):
+    vehiculo2 = Vehiculo.query.get(idvehiculo)
+    if(vehiculo2 is not None):
+      vehiculo2 = vehiculo2.serialize()
     else:
-      users2 = {'error': 'No existe el usuario prueba'}, 404
-    return users2
-"""
-
+      vehiculo2 = {'error': 'No existe el usuario prueba'}, 404
+    return vehiculo2
+  
