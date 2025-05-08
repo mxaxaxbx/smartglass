@@ -6,7 +6,7 @@ from app.handlers.roles import RolHandler;
 from app.handlers.ordenes import OrdenHandler;
 from app.handlers.vehiculos import VehiculoHandler, VehiculoIDHandler;
 from app.handlers.tipo_piezas import TipoPiezasHandler;
-from app.handlers.tipo_solicitudes import TipoSolicitudesHandler;
+from app.handlers.tipo_solicitudes import TipoSolicitudesHandler, TpoSolIDHandler;
 from app.handlers.rutasproduccion import RutasProduccionHandler;
 from app.handlers.piezas import PiezasHandler;
 from app.handlers.areas import AreasHandler;
@@ -28,6 +28,7 @@ ROUTES = [
   (VehiculoIDHandler, '/vehiculos/<int:idvehiculo>'),
   (TipoPiezasHandler, '/tipospiezas'),
   (TipoSolicitudesHandler, '/tipossolicitudes'),
+  (TpoSolIDHandler, '/tipossolicitudes/<int:idtposol>'),
   (RutasProduccionHandler, '/rutasproduccion'),
   (PiezasHandler, '/piezas'),
   (AreasHandler, '/areas'),
