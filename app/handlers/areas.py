@@ -46,13 +46,13 @@ class AreasHandler(Resource):
 
     return msg
   
-"""class UserIDHandler(Resource):
+class AreaIDHandler(Resource):
   @jwt_required()
-  def get(self, user_id=None):
-    users2 = User.query.get(user_id)
-    if(users2 is not None):
-      users2 = users2.serialize()
+  def get(self, idarea=None):
+    area2 = Area.query.get(idarea)
+    if(area2 is not None):
+      area2 = area2.serialize()
     else:
-      users2 = {'error': 'No existe el usuario prueba'}, 404
-    return users2
-"""
+      area2 = {'error': 'No existe el area'}, 404
+    return area2
+
