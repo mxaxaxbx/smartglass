@@ -46,13 +46,12 @@ class TipoPiezasHandler(Resource):
 
     return msg
   
-"""class UserIDHandler(Resource):
+class TpoPiezaIDHandler(Resource):
   @jwt_required()
-  def get(self, user_id=None):
-    users2 = User.query.get(user_id)
-    if(users2 is not None):
-      users2 = users2.serialize()
+  def get(self, idtpopieza=None):
+    tpoPieza2 = TipoPieza.query.get(idtpopieza)
+    if(tpoPieza2 is not None):
+      tpoPieza2 = tpoPieza2.serialize()
     else:
-      users2 = {'error': 'No existe el usuario prueba'}, 404
-    return users2
-"""
+      users2 = {'error': 'No existe el tipo de pieza'}, 404
+    return tpoPieza2
