@@ -50,13 +50,12 @@ class RPrdcion_EtapasHandler(Resource):
 
     return msg
   
-"""class UserIDHandler(Resource):
+class RtaPrdEtpaIDHandler(Resource):
   @jwt_required()
-  def get(self, user_id=None):
-    users2 = User.query.get(user_id)
-    if(users2 is not None):
-      users2 = users2.serialize()
+  def get(self, id_rprdcion_etapa=None):
+    r_prd_etapa = RPrdcion_Etapas.query.get(id_rprdcion_etapa)
+    if(r_prd_etapa is not None):
+      r_prd_etapa = r_prd_etapa.serialize()
     else:
-      users2 = {'error': 'No existe el usuario prueba'}, 404
-    return users2
-"""
+      r_prd_etapa = {'error': 'No existe la Ruta de Producción - Etapa'}, 404
+    return r_prd_etapa
