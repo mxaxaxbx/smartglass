@@ -49,17 +49,17 @@ class RolHandler(Resource):
     return msg
   
   
-"""class UserIDHandler(Resource):
+class RolIDHandler(Resource):
   @jwt_required()
-  def get(self, user_id=None):
-    users2 = User.query.get(user_id)
-    if(users2 is not None):
-      users2 = users2.serialize()
+  def get(self, idrol=None):
+    rol2 = Rol.query.get(idrol)
+    if(rol2 is not None):
+      rol2 = rol2.serialize()
     else:
-      users2 = {'error': 'No existe el usuario prueba'}, 404
-    return users2
+      rol2 = {'error': 'No existe el rol'}, 404
+    return rol2
 
-class CurrentUserHandler(Resource):
+"""class CurrentUserHandler(Resource):
   @jwt_required()
   def get(self):
     userid = get_jwt_identity()
