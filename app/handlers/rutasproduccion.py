@@ -46,13 +46,12 @@ class RutasProduccionHandler(Resource):
 
     return msg
   
-"""class UserIDHandler(Resource):
+class RtaProdIDHandler(Resource):
   @jwt_required()
-  def get(self, user_id=None):
-    users2 = User.query.get(user_id)
-    if(users2 is not None):
-      users2 = users2.serialize()
+  def get(self, idrutapracion=None):
+    rutaprod = RutaProduccion.query.get(idrutapracion)
+    if(rutaprod is not None):
+      rutaprod = rutaprod.serialize()
     else:
-      users2 = {'error': 'No existe el usuario prueba'}, 404
-    return users2
-"""
+      rutaprod = {'error': 'No existe la ruta de producción'}, 404
+    return rutaprod
