@@ -10,6 +10,7 @@ class UsuarioHandler(Resource):
 
   @jwt_required()
   def get(self):
+    
     #users = Usuario.query.all()
     users =  Usuario.query.filter_by(active=True).all()
     users_js = [lo_user.serialize() for lo_user in users]
