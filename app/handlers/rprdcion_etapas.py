@@ -59,3 +59,15 @@ class RtaPrdEtpaIDHandler(Resource):
     else:
       r_prd_etapa = {'error': 'No existe la Ruta de Producción - Etapa'}, 404
     return r_prd_etapa
+  
+
+class EtapasRtaPrdIDHandler(Resource):
+  @jwt_required()
+  def get(self, idrutapracion=None):
+     
+    r_prd_etapas = RPrdcion_Etapas.query.filter_by(id_rutprod=idrutapracion)
+
+    r_prd_etapas_js = [lo_r_prd_etapa.serialize() for lo_r_prd_etapa in r_prd_etapas]
+    return r_prd_etapas_js
+
+
