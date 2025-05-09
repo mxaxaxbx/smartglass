@@ -11,7 +11,7 @@ from app.handlers.rutasproduccion import RutasProduccionHandler, RtaProdIDHandle
 from app.handlers.piezas import PiezasHandler;
 from app.handlers.areas import AreasHandler, AreaIDHandler;
 from app.handlers.etapas import EtapasHandler, EtapaIDHandler;
-from app.handlers.rprdcion_etapas import RPrdcion_EtapasHandler, RtaPrdEtpaIDHandler;
+from app.handlers.rprdcion_etapas import RPrdcion_EtapasHandler, RtaPrdEtpaIDHandler, EtapasRtaPrdIDHandler;
 from app.handlers.procesos import ProcesoHandler, ProcesoIDHandler;
 from app.handlers.historial_procesos import HistorialProcesoHandler, HistorialProcesoIDHandler;
 
@@ -33,6 +33,7 @@ ROUTES = [
   (TpoSolIDHandler, '/tipossolicitudes/<int:idtposol>'),
   (RutasProduccionHandler, '/rutasproduccion'),
   (RtaProdIDHandler, '/rutasproduccion/<int:idrutapracion>'),
+  (EtapasRtaPrdIDHandler, '/rutasproduccion/<int:idrutapracion>/etapas'),
   (PiezasHandler, '/piezas'),
   (AreasHandler, '/areas'),
   (AreaIDHandler, '/areas/<int:idarea>'),
