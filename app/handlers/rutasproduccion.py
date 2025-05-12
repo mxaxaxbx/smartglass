@@ -21,7 +21,8 @@ class RutasProduccionHandler(Resource):
     lo_rutaprod = RutaProduccion(nombre=data['nombre'], created=created, update=None)
     lo_rutaprod.save()
 
-    return { 'message': 'Ruta de Producción creada correctamente' }
+    return { 'message': 'Ruta de Producción creada correctamente',
+             'id_rutaprod': lo_rutaprod.idrutaprdcion }
   
   @jwt_required()
   def put(self):
