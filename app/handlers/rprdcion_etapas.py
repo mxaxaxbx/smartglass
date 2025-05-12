@@ -44,9 +44,9 @@ class RPrdcion_EtapasHandler(Resource):
         lo_r_prd_etapa.put()
         msg = {'message': 'Ruta de Producción / Etapa actualizada correctamente.'}
       else:
-        msg = {'error': 'No existe el Ruta de Producción / Etapa a actualizar.'}, 404
+        msg = {'error': 'No existe el Ruta de Producción / Etapa a actualizar.'}, 402
     else:
-      msg = {'error': 'No existe atributo "id_rprdcion_etapa" en payload enviado.'}, 404
+      msg = {'error': 'No existe atributo "id_rprdcion_etapa" en payload enviado.'}, 403
 
     return msg
   
