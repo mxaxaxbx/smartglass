@@ -20,7 +20,7 @@ class RPrdcion_Etapas(db.Model):
 
   def serialize(self):
     return {
-      'idetid_rprdcion_etapaapa': str(self.id_rprdcion_etapa),
+      'id_rprdcion_etapa': str(self.id_rprdcion_etapa),
       'id_rutprod': str(self.id_rutprod),
       'idetapa': str(self.idetapa),
       'orden': self.orden,
