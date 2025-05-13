@@ -3,7 +3,7 @@ from flask import Blueprint
 from app.handlers.index import IndexHandler
 from app.handlers.usuarios import UsuarioHandler, UserIDHandler, UserLogin, CurrentUserHandler;
 from app.handlers.roles import RolHandler, RolIDHandler;
-from app.handlers.ordenes import OrdenHandler, OrderIDHandler;
+from app.handlers.ordenes import OrdenHandler, OrderIDHandler, OrderIDEstadoHandler;
 from app.handlers.vehiculos import VehiculoHandler, VehiculoIDHandler;
 from app.handlers.tipo_piezas import TipoPiezasHandler, TpoPiezaIDHandler;
 from app.handlers.tipo_solicitudes import TipoSolicitudesHandler, TpoSolIDHandler;
@@ -26,6 +26,7 @@ ROUTES = [
   (RolIDHandler, '/roles/<int:idrol>'),
   (OrdenHandler, '/ordenes'),
   (OrderIDHandler, '/ordenes/<int:ordenid>'),
+  (OrderIDEstadoHandler, '/ordenes/estado'),
   (VehiculoHandler, '/vehiculos'),
   (VehiculoIDHandler, '/vehiculos/<int:idvehiculo>'),
   (TipoPiezasHandler, '/tipospiezas'),
