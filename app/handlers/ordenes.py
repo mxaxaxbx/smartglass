@@ -16,9 +16,10 @@ class OrdenHandler(Resource):
   def post(self):
     data = request.get_json()
     created = int(time())
+    estado = 'REGISTRADO'
 
     #for item in data:
-    lo_orden = Orden(fechapedido=data['fechapedido'], cliente=data['cliente'], torrecliente=data['torrecliente'], estado=data['estado'], created=created, update=None)
+    lo_orden = Orden(fechapedido=data['fechapedido'], cliente=data['cliente'], torrecliente=data['torrecliente'], estado=estado, created=created, update=None)
     lo_orden.save()
 
     return { 'message': 'Orden Creado correctamente' }
