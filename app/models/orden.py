@@ -9,6 +9,7 @@ class Orden(db.Model):
   fechapedido = db.Column(db.Integer, nullable=False)
   cliente = db.Column(db.String(120), nullable=False)
   torrecliente = db.Column(db.String(120), nullable=False)
+  estado = db.Column(db.String(120), nullable=False)
   created = db.Column(db.Integer, nullable=False)
   update = db.Column(db.Integer, nullable=False)
 
@@ -18,6 +19,7 @@ class Orden(db.Model):
       'fechapedido': self.fechapedido,
       'cliente': self.cliente,
       'torrecliente': self.torrecliente,
+      'estado': self.estado,
       'created': self.created,
       'update': self.update
     }
