@@ -18,7 +18,7 @@ class OrdenHandler(Resource):
     created = int(time())
 
     #for item in data:
-    lo_orden = Orden(fechapedido=data['fechapedido'], cliente=data['cliente'], torrecliente=data['torrecliente'], created=created, update=None)
+    lo_orden = Orden(fechapedido=data['fechapedido'], cliente=data['cliente'], torrecliente=data['torrecliente'], estado=data['estado'], created=created, update=None)
     lo_orden.save()
 
     return { 'message': 'Orden Creado correctamente' }
@@ -38,6 +38,8 @@ class OrdenHandler(Resource):
             lo_orden.cliente = data["cliente"]
         if "torrecliente" in data:
             lo_orden.torrecliente = data["torrecliente"]
+        if "estado" in data:
+            lo_orden.estado = data["estado"]
 
         lo_orden.update = int(time())
         
@@ -50,13 +52,12 @@ class OrdenHandler(Resource):
 
     return msg
 
-"""class UserIDHandler(Resource):
+class OrderIDHandler(Resource):
   @jwt_required()
-  def get(self, user_id=None):
-    users2 = User.query.get(user_id)
-    if(users2 is not None):
-      users2 = users2.serialize()
+  def get(self, ordenid=None):
+    order2 = Orden.query.get(ordenid)
+    if(order2 is not None):
+      order2 = order2.serialize()
     else:
-      users2 = {'error': 'No existe el usuario prueba'}, 404
-    return users2
-"""
+      order2 = {'error': 'No existe el usuario prueba'}, 404
+    return order2
