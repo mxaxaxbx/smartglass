@@ -33,7 +33,7 @@ class Pieza(db.Model):
       'espesor_unidad': self.espesor_unidad,
       'fechaentrega': self.fechaentrega,
       'idtpopieza': str(self.idtpopieza),
-      'txttpopieza': str(self.tpopieza.nombr),      
+      'txttpopieza': self.tpopieza.nombre,      
       'idtposol': str(self.idtposol),    
       'estado': self.estado,
       'created': self.created,
