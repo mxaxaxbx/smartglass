@@ -22,7 +22,8 @@ class PiezasHandler(Resource):
 
     if order.estado == 'REGISTRADO' or order.estado == 'RECHAZADO'  or order.estado == '' or order.estado is None:
       #for item in data:
-      lo_pieza = Pieza(ordenid=ordenid, idvehiculo=data['idvehiculo'], idrutaprdccion=data['idrutaprdccion'], espesorval=data['espesorval'], espesor_unidad=data['espesor_unidad'], fechaentrega=data['fechaentrega'], idtpopieza=data['idtpopieza'], idtposol=data['idtposol'], created=created, update=None)
+      estado = 'REGISTRADO'
+      lo_pieza = Pieza(ordenid=ordenid, idvehiculo=data['idvehiculo'], idrutaprdccion=data['idrutaprdccion'], espesorval=data['espesorval'], espesor_unidad=data['espesor_unidad'], fechaentrega=data['fechaentrega'], idtpopieza=data['idtpopieza'], idtposol=data['idtposol'], estado=estado, created=created, update=None)
       lo_pieza.save()
 
       return { 'message': 'Pieza creada correctamente' }
@@ -55,6 +56,8 @@ class PiezasHandler(Resource):
               lo_pieza.idtpopieza = data["idtpopieza"]
           if "idtposol" in data:
               lo_pieza.idtposol = data["idtposol"]
+          if "estado" in data:
+              lo_pieza.estado = data["estado"]
 
           lo_pieza.update = int(time())
           
