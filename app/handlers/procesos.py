@@ -15,7 +15,7 @@ class ProcesoHandler(Resource):
   def post(self):
     data = request.get_json()
     created = int(time())
-
+    
     #for item in data:
     lo_proceso = Proceso(idpieza=data['idpieza'], fechainicial=data['fechainicial'], fechafinal=data['fechafinal'], estado=data['estado'], notas=data['notas'], created=created, update=None)
     try:
