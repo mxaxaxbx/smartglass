@@ -34,7 +34,8 @@ class Pieza(db.Model):
       'fechaentrega': self.fechaentrega,
       'idtpopieza': self.idtpopieza,
       'txttpopieza': self.tpopieza.nombre,      
-      'idtposol': self.idtposol,
+      'idtposol': self.idtposol,    
+      'estado': self.estado,
       'created': self.created,
       'update': self.update
     }
