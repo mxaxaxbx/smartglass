@@ -25,16 +25,16 @@ class Pieza(db.Model):
   def serialize(self):
     return {
       'idpieza': str(self.idpieza),
-      'ordenid': self.ordenid,
+      'ordenid': str(self.ordenid),
       'ordenEstado': self.orden.estado,
-      'idvehiculo': self.idvehiculo,
-      'idrutaprdccion': self.idrutaprdccion,
+      'idvehiculo': str(self.idvehiculo),
+      'idrutaprdccion': str(self.idrutaprdccion),
       'espesorval': self.espesorval,
       'espesor_unidad': self.espesor_unidad,
       'fechaentrega': self.fechaentrega,
-      'idtpopieza': self.idtpopieza,
-      'txttpopieza': self.tpopieza.nombre,      
-      'idtposol': self.idtposol,    
+      'idtpopieza': str(self.idtpopieza),
+      'txttpopieza': str(self.tpopieza.nombr),      
+      'idtposol': str(self.idtposol),    
       'estado': self.estado,
       'created': self.created,
       'update': self.update
