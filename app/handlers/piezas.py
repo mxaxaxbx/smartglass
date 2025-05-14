@@ -23,7 +23,7 @@ class PiezasHandler(Resource):
     if order.estado == 'REGISTRADO' or order.estado == 'RECHAZADO'  or order.estado == '' or order.estado is None:
       #for item in data:
       estado = 'REGISTRADO'
-      lo_pieza = Pieza(ordenid=ordenid, idvehiculo=data['idvehiculo'], idrutaprdccion=data['idrutaprdccion'], espesorval=data['espesorval'], espesor_unidad=data['espesor_unidad'], fechaentrega=data['fechaentrega'], idtpopieza=data['idtpopieza'], idtposol=data['idtposol'], estado=estado, created=created, update=None)
+      lo_pieza = Pieza(ordenid=ordenid, idvehiculo=data['idvehiculo'], idrutaprdccion=data['idrutaprdccion'], espesorval=data['espesorval'], espesor_unidad=data['espesor_unidad'], idtpopieza=data['idtpopieza'], idtposol=data['idtposol'], estado=estado, created=created, update=None)
       lo_pieza.save()
 
       return { 'message': 'Pieza creada correctamente' }
