@@ -8,7 +8,7 @@ from app.handlers.vehiculos import VehiculoHandler, VehiculoIDHandler;
 from app.handlers.tipo_piezas import TipoPiezasHandler, TpoPiezaIDHandler;
 from app.handlers.tipo_solicitudes import TipoSolicitudesHandler, TpoSolIDHandler;
 from app.handlers.rutasproduccion import RutasProduccionHandler, RtaProdIDHandler;
-from app.handlers.piezas import PiezasHandler;
+from app.handlers.piezas import PiezasHandler, PiezaIDHandler;
 from app.handlers.areas import AreasHandler, AreaIDHandler;
 from app.handlers.etapas import EtapasHandler, EtapaIDHandler;
 from app.handlers.rprdcion_etapas import RPrdcion_EtapasHandler, RtaPrdEtpaIDHandler, EtapasRtaPrdIDHandler;
@@ -37,6 +37,7 @@ ROUTES = [
   (RtaProdIDHandler, '/rutasproduccion/<int:idrutapracion>'),
   (EtapasRtaPrdIDHandler, '/rutasproduccion/<int:idrutapracion>/etapas'),
   (PiezasHandler, '/piezas'),
+  (PiezaIDHandler, '/piezas/<int:idpieza>'),
   (AreasHandler, '/areas'),
   (AreaIDHandler, '/areas/<int:idarea>'),
   (EtapasHandler, '/etapas'),
