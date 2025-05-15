@@ -9,7 +9,7 @@ class Pieza(db.Model):
   idpieza = db.Column(db.Integer, primary_key=True)
   ordenid = db.Column(db.Integer, db.ForeignKey('smartglass.ordenes.ordenid'), nullable=False)
   idvehiculo = db.Column(db.Integer, nullable=False)
-  idrutaprdccion = db.Column(db.Integer, nullable=False)
+  idrutaprdccion = db.Column(db.Integer, db.ForeignKey('smartglass.rutasproduccion.idrutaprdcion'), nullable=False)
   espesorval = db.Column(db.Float, nullable=False)
   espesor_unidad = db.Column(db.String(120), nullable=False)
   fechaentrega = db.Column(db.Integer, nullable=False)
@@ -18,11 +18,14 @@ class Pieza(db.Model):
   estado = db.Column(db.String(120), nullable=False)
   tpopieza = db.relationship('TipoPieza', backref='piezas', lazy=True)
   orden = db.relationship('Orden', backref='piezas', lazy=True)
+  rutaprdccion = db.relationship('RutaProduccion', backref='piezas', lazy=True)
 
   created = db.Column(db.Integer, nullable=False)
   update = db.Column(db.Integer, nullable=False)
 
   def serialize(self):
+    etapas_rta = self.rutaprdccion.rprdcion_etapas
+    etapas_rta.sort(key=lambda lo_rprdcion_etapa: lo_rprdcion_etapa.orden, reverse=True)
     return {
       'idpieza': str(self.idpieza),
       'ordenid': str(self.ordenid),
@@ -37,6 +40,8 @@ class Pieza(db.Model):
       'idtposol': str(self.idtposol),    
       'estado': self.estado,
       'created': self.created,
+      # 'ruta': self.rutaprdccion.nombre,
+      # 'rprdcion_etapas': [lo_rprdcion_etapa.serialize() for lo_rprdcion_etapa in etapas_rta],
       'update': self.update
     }
   
