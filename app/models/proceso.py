@@ -6,11 +6,12 @@ class Proceso(db.Model):
   __table_args__ = {'schema': 'smartglass'}  # Esquema específico
 
   idproceso = db.Column(db.Integer, primary_key=True)
-  idpieza = db.Column(db.Integer, nullable=False)
+  idpieza = db.Column(db.Integer, db.ForeignKey('smartglass.piezas.idpieza'), nullable=False)
   estado = db.Column(db.String(120), nullable=False)
   fechainicial = db.Column(db.Integer, nullable=False)
   fechafinal = db.Column(db.Integer, nullable=False)
   notas = db.Column(db.String(120), nullable=False)
+  pieza = db.relationship('Pieza', backref='procesos', lazy=True)
 
   created = db.Column(db.Integer, nullable=False)
   update = db.Column(db.Integer, nullable=False)
@@ -24,7 +25,8 @@ class Proceso(db.Model):
       'fechafinal': self.fechafinal,
       'notas': self.notas,
       'created': self.created,
-      'update': self.update
+      'update': self.update,
+      'pieza': self.pieza.serialize(),
     }
   
   def save(self):
