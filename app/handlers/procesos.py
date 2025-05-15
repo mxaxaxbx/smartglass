@@ -17,7 +17,7 @@ class ProcesoHandler(Resource):
     created = int(time())
     
     #for item in data:
-    lo_proceso = Proceso(idpieza=data['idpieza'], fechainicial=data['fechainicial'], fechafinal=data['fechafinal'], estado=data['estado'], notas=data['notas'], created=created, update=None)
+    lo_proceso = Proceso(idpieza=data['idpieza'], fechainicial=data['fechainicial'], fechafinal=data['fechafinal'], estado=data['estado'], notas=data['notas'], reproceso=data['reproceso'], created=created, update=None)
     try:
       lo_proceso.save()
       return { 'message': 'Proceso creado correctamente' }
@@ -44,6 +44,8 @@ class ProcesoHandler(Resource):
             lo_proceso.estado = data["estado"]
         if "notas" in data:
             lo_proceso.notas = data["notas"]
+        if "reproceso" in data:
+            lo_proceso.reproceso = data["reproceso"]
 
         lo_proceso.update = int(time())
         
