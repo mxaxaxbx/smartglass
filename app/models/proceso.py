@@ -11,6 +11,7 @@ class Proceso(db.Model):
   fechainicial = db.Column(db.Integer, nullable=False)
   fechafinal = db.Column(db.Integer, nullable=False)
   notas = db.Column(db.String(120), nullable=False)
+  reproceso = db.Column(db.Boolean, nullable=False)
   pieza = db.relationship('Pieza', backref='procesos', lazy=True)
 
   created = db.Column(db.Integer, nullable=False)
@@ -24,6 +25,7 @@ class Proceso(db.Model):
       'fechainicial': self.fechainicial,
       'fechafinal': self.fechafinal,
       'notas': self.notas,
+      'reproceso': self.reproceso,
       'created': self.created,
       'update': self.update,
       'pieza': self.pieza.serialize(),
