@@ -9,6 +9,7 @@ class Area(db.Model):
   nombre = db.Column(db.String(120), nullable=False)
   created = db.Column(db.Integer, nullable=False)
   update = db.Column(db.Integer, nullable=False)
+  etapas = db.relationship("Etapa", backref='etapas', lazy=True)
 
   def save(self):
     db.session.add(self)
@@ -19,7 +20,8 @@ class Area(db.Model):
       'idarea': str(self.idarea),
       'nombre': self.nombre,
       'update': self.update,
-      'created': self.created
+      'created': self.created,
+      #'etapas': [lo_etapa.serialize() for lo_etapa in self.etapas]
     }
   
   def put(self):
