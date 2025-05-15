@@ -10,6 +10,7 @@ class RPrdcion_Etapas(db.Model):
   id_rutprod = db.Column(db.Integer, db.ForeignKey('smartglass.rutasproduccion.idrutaprdcion'), nullable=False)
   idetapa = db.Column(db.Integer, db.ForeignKey('smartglass.etapas.idetapa'), nullable=False)
   orden = db.Column(db.Integer, nullable=False)
+  etapafinal = db.Column(db.Boolean, nullable=False)
   created = db.Column(db.Integer, nullable=False)
   update = db.Column(db.Integer, nullable=False)
   etapa = db.relationship('Etapa', backref='rprdcion_etapas', lazy=True)
@@ -25,6 +26,7 @@ class RPrdcion_Etapas(db.Model):
       'id_rutprod': str(self.id_rutprod),
       'idetapa': str(self.idetapa),
       'orden': self.orden,
+      'etapafinal': self.etapafinal,
       'update': self.update,
       'created': self.created,
       'n_etapa': self.etapa.nombre
