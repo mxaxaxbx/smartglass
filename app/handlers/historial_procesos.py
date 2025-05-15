@@ -3,6 +3,7 @@ from time import time
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from app.models.historial_proceso import HistorialProceso
+from app.models.usuario import Usuario
 
 class HistorialProcesoHandler(Resource):
 
@@ -69,4 +70,18 @@ class HistorialProcesoIDHandler(Resource):
     else:
       h_proceso_js = {'error': 'No existe el Historial de Proceso asociado al Id enviado'}, 404
     return h_proceso_js
+  
+class HistorialProcesoUserIDHandler(Resource):
+  @jwt_required()
+  def get(self, user_id=None):  
+    lo_user = Usuario.query.get(user_id)
+    if(lo_user is not None):
+      hitorial_procesos_js = [lo_hproceso.serialize() 
+                              for lo_etapa in lo_user.area.etapas
+                                for lo_hproceso in lo_etapa.hsProcesos]
+      
+    else:
+      hitorial_procesos_js = {'error': 'No existe el procesos de peizas asociados al usuario'}, 404
+    return hitorial_procesos_js
+
 
