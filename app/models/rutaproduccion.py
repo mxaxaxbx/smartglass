@@ -9,6 +9,7 @@ class RutaProduccion(db.Model):
   nombre = db.Column(db.String(120), nullable=False)
   created = db.Column(db.Integer, nullable=False)
   update = db.Column(db.Integer, nullable=False)
+  rprdcion_etapas = db.relationship("RPrdcion_Etapas", backref='rutasproduccion', lazy=True)
 
   def save(self):
     db.session.add(self)
@@ -19,7 +20,8 @@ class RutaProduccion(db.Model):
       'idrutaprdcion': str(self.idrutaprdcion),
       'nombre': self.nombre,
       'update': self.update,
-      'created': self.created
+      'created': self.created,
+      #'rprdcion_etapas': [lo_rprdcion_etapa.serialize() for lo_rprdcion_etapa in self.rprdcion_etapas]
     }
   
   def put(self):
