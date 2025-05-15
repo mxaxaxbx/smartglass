@@ -20,7 +20,7 @@ class HistorialProceso(db.Model):
 
   def serialize(self):
     return {
-      'idhistorialprocso': str(self.idproceso),
+      'idhistorialprocso': str(self.idhistorialprocso),
       'estado': self.estado,
       'fechaingreso': self.fechaingreso,
       'fechasalida': self.fechasalida,
