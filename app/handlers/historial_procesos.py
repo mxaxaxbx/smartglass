@@ -84,4 +84,25 @@ class HistorialProcesoUserIDHandler(Resource):
       hitorial_procesos_js = {'error': 'No existe el procesos de peizas asociados al usuario'}, 404
     return hitorial_procesos_js
 
+class HistorialProcesoTerminarHandler(Resource):
+  @jwt_required()
+  def post(self):
+    data = request.json  # Datos enviados en la solicitud
+    msg = ""
+
+    if "idhistorialprocso" in data:
+      lo_hproceso = HistorialProceso.query.get(data["idhistorialprocso"])
+      if(lo_hproceso is not None):
+        
+        lo_hproceso.update = int(time())
+        
+        lo_hproceso.put()
+        msg = {'message': 'Historial de proceso actualizada correctamente.'}
+      else:
+        msg = {'error': 'No existe el Historial de Proceso a actualizar.'}, 404
+    else:
+      msg = {'error': 'No existe atributo "idhistorialprocso" en payload enviado.'}, 404
+
+    return msg
+  
 
