@@ -9,10 +9,11 @@ class HistorialProceso(db.Model):
   estado = db.Column(db.String(120), nullable=False)
   fechaingreso = db.Column(db.Integer, nullable=False)
   fechasalida = db.Column(db.Integer, nullable=False)
-  idetapa = db.Column(db.Integer, nullable=False)
-  idproceso = db.Column(db.Integer, nullable=False)
+  idetapa = db.Column(db.Integer, db.ForeignKey('smartglass.etapas.idetapa'), nullable=False)
+  idproceso = db.Column(db.Integer, db.ForeignKey('smartglass.procesos.idproceso'), nullable=False)
   idusuario = db.Column(db.Integer, nullable=False)
   notas = db.Column(db.String(120), nullable=False)
+  proceso = db.relationship('Proceso', backref='historialproceso', lazy=True)
 
   created = db.Column(db.Integer, nullable=False)
   update = db.Column(db.Integer, nullable=False)
@@ -28,7 +29,8 @@ class HistorialProceso(db.Model):
       'idusuario': str(self.idusuario),
       'notas': self.notas,
       'created': self.created,
-      'update': self.update
+      'update': self.update,
+      'proceso': self.proceso.serialize(),
     }
   
   def save(self):
