@@ -18,7 +18,7 @@ class RPrdcion_EtapasHandler(Resource):
     created = int(time())
 
     #for item in data:
-    lo_r_prd_etapa = RPrdcion_Etapas(id_rutprod=data['id_rutprod'], idetapa=data['idetapa'], orden=data['orden'], created=created, update=None)
+    lo_r_prd_etapa = RPrdcion_Etapas(id_rutprod=data['id_rutprod'], idetapa=data['idetapa'], orden=data['orden'], etapafinal=data['etapafinal'], created=created, update=None)
     lo_r_prd_etapa.save()
 
     return { 'message': 'Etapa creada correctamente' }
@@ -38,6 +38,8 @@ class RPrdcion_EtapasHandler(Resource):
             lo_r_prd_etapa.idetapa = data["idetapa"]
         if "orden" in data:
             lo_r_prd_etapa.orden = data["orden"]
+        if "etapafinal" in data:
+            lo_r_prd_etapa.etapafinal = data["etapafinal"]
 
         lo_r_prd_etapa.update = int(time())
         
