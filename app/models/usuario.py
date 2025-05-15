@@ -18,7 +18,8 @@ class Usuario(db.Model):
   email = db.Column(db.String(120), nullable=False)
   password = db.Column(db.String(120), nullable=False)
   idrol = db.Column(db.Integer, nullable=False)
-  idarea = db.Column(db.Integer, nullable=False)
+  idarea = db.Column(db.Integer, db.ForeignKey('smartglass.areas.idarea'), nullable=False)  
+  area = db.relationship('Area', backref='usuarios', lazy=True)
 
   def serialize(self):
     return {
@@ -34,7 +35,8 @@ class Usuario(db.Model):
       'superuser': self.superuser,
       'created': self.created,
       'update': self.update,
-      'lastlogin': self.lastlogin
+      'lastlogin': self.lastlogin,      
+      #'area': self.area.serialize(),
     }
   
   def save(self):
