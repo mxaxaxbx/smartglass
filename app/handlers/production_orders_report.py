@@ -10,12 +10,7 @@ class ProductionOrdersReportHandler(Resource):
   @jwt_required()
   def post(self):
     data = request.get_json()
-    start = data.get('start')
-    end = data.get('end')
-
-    # check if start or end is empty. Then return an error
-    if not start or not end:
-      return {'error': 'Send start and end dates'}, 400
+    ordenid = data.get('ordenid')
     
     sql = text(f"""
       SELECT 
@@ -36,6 +31,7 @@ class ProductionOrdersReportHandler(Resource):
       LEFT JOIN smartglass.piezas p ON p.ordenid = o.ordenid
       LEFT JOIN smartglass.procesos pr ON pr.idpieza = p.idpieza
       LEFT JOIN smartglass.historialproceso hp ON hp.idproceso = pr.idproceso
+      { f'WHERE o.ordenid = {ordenid}' if ordenid else '' }
       GROUP BY 
           o.ordenid, o.fechapedido, o.estado
       ORDER BY 
