@@ -26,7 +26,7 @@ class EfficiencyReportHandler(Resource):
         a.nombre AS nombre_area,
         COUNT(DISTINCT pi.idpieza) AS total_piezas,
         COUNT(distinct case when hp.estado = 'TERMINADO' then pi.idpieza end)::numeric as piezas_terminadas,
-        COUNT(DISTINCT CASE WHEN hp.estado = 'RECHAZADA' THEN pi.idpieza END)::NUMERIC as piezas_rechazadas,
+        COUNT(DISTINCT CASE WHEN hp.estado = 'RECHAZADO' THEN pi.idpieza END)::NUMERIC as piezas_rechazadas,
         COUNT(DISTINCT CASE WHEN p.reproceso = true THEN pi.idpieza END)::NUMERIC AS piezas_reprocesadas
     FROM 
         smartglass.etapas e 
