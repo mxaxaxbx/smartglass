@@ -16,6 +16,7 @@ from app.handlers.procesos import ProcesoHandler, ProcesoIDHandler
 from app.handlers.historial_procesos import HistorialProcesoHandler, HistorialProcesoIDHandler, HistorialProcesoUserIDHandler
 from app.handlers.historial_procesos import HistorialProcesoTerminarHandler
 from app.handlers.efficiency_report import EfficiencyReportHandler
+from app.handlers.general_efficiency_report import GeneralEfficiencyReportHandler
 
 
 
@@ -55,6 +56,7 @@ ROUTES = [
   (HistorialProcesoUserIDHandler, '/historialprocesos/usuario/<int:user_id>'),
   (HistorialProcesoTerminarHandler, '/historialprocesos/terminar'),
   (EfficiencyReportHandler, '/efficiency_report'),
+  (GeneralEfficiencyReportHandler, '/general_efficiency_report'),
 ]
 
 api_bp = Blueprint('api', __name__)
