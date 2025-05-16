@@ -21,7 +21,7 @@ class GeneralEfficiencyReportHandler(Resource):
       SELECT
         COUNT(DISTINCT pi.idpieza) AS total_piezas_recibidas,
         COUNT(DISTINCT CASE WHEN hp.estado = 'TERMINADO' THEN pi.idpieza END)::NUMERIC AS piezas_terminadas,
-        COUNT(DISTINCT CASE WHEN hp.estado = 'RECHAZADA' THEN pi.idpieza END)::NUMERIC AS piezas_rechazadas,
+        COUNT(DISTINCT CASE WHEN hp.estado = 'RECHAZADO' THEN pi.idpieza END)::NUMERIC AS piezas_rechazadas,
         COUNT(DISTINCT CASE WHEN p.reproceso = TRUE THEN pi.idpieza END)::NUMERIC AS piezas_reprocesadas,
         ROUND(
             (
