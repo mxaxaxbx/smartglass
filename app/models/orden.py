@@ -21,7 +21,8 @@ class Orden(db.Model):
       'torrecliente': self.torrecliente,
       'estado': self.estado,
       'created': self.created,
-      'update': self.update
+      'update': self.update,
+      #'piezas': [lo_pieza.serialize() for lo_pieza in self.piezas]
     }
   
   def save(self):

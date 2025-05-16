@@ -14,7 +14,9 @@ from app.handlers.etapas import EtapasHandler, EtapaIDHandler
 from app.handlers.rprdcion_etapas import RPrdcion_EtapasHandler, RtaPrdEtpaIDHandler, EtapasRtaPrdIDHandler
 from app.handlers.procesos import ProcesoHandler, ProcesoIDHandler
 from app.handlers.historial_procesos import HistorialProcesoHandler, HistorialProcesoIDHandler, HistorialProcesoUserIDHandler
+from app.handlers.historial_procesos import HistorialProcesoTerminarHandler
 from app.handlers.efficiency_report import EfficiencyReportHandler
+
 
 
 ROUTES = [
@@ -51,8 +53,8 @@ ROUTES = [
   (HistorialProcesoHandler, '/historialprocesos'),
   (HistorialProcesoIDHandler, '/historialprocesos/<h_proceso_id>'),
   (HistorialProcesoUserIDHandler, '/historialprocesos/usuario/<int:user_id>'),
+  (HistorialProcesoTerminarHandler, '/historialprocesos/terminar'),
   (EfficiencyReportHandler, '/efficiency_report'),
-
 ]
 
 api_bp = Blueprint('api', __name__)
