@@ -12,7 +12,7 @@ from app.handlers.piezas import PiezasHandler, PiezaIDHandler
 from app.handlers.areas import AreasHandler, AreaIDHandler
 from app.handlers.etapas import EtapasHandler, EtapaIDHandler
 from app.handlers.rprdcion_etapas import RPrdcion_EtapasHandler, RtaPrdEtpaIDHandler, EtapasRtaPrdIDHandler
-from app.handlers.procesos import ProcesoHandler, ProcesoIDHandler
+from app.handlers.procesos import ProcesoHandler, ProcesoIDHandler, ProcesoReproHandler, ProcesoRchzrHandler
 from app.handlers.historial_procesos import HistorialProcesoHandler, HistorialProcesoIDHandler, HistorialProcesoUserIDHandler
 from app.handlers.historial_procesos import HistorialProcesoTerminarHandler
 from app.handlers.efficiency_report import EfficiencyReportHandler
@@ -50,6 +50,8 @@ ROUTES = [
   (RPrdcion_EtapasHandler, '/rprdcion_etapas'),
   (RtaPrdEtpaIDHandler, '/rprdcion_etapas/<int:id_rprdcion_etapa>'),
   (ProcesoHandler, '/procesos'),
+  (ProcesoReproHandler, '/procesos/reprocesar'),
+  (ProcesoRchzrHandler, '/procesos/rechazar'),
   (ProcesoIDHandler, '/procesos/<int:proceso_id>'),
   (HistorialProcesoHandler, '/historialprocesos'),
   (HistorialProcesoIDHandler, '/historialprocesos/<h_proceso_id>'),
