@@ -31,6 +31,7 @@ class HistorialProceso(db.Model):
       'created': self.created,
       'update': self.update,
       'proceso': self.proceso.serialize(),
+      'etapa': self.etapas.serialize()
     }
   
   def save(self):
