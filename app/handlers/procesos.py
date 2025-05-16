@@ -120,26 +120,47 @@ class ProcesoRchzrHandler(Resource):
     if "idproceso" in data:
       lo_proceso = Proceso.query.get(data["idproceso"])
       if(lo_proceso is not None):
-            # Actualizar solo si el dato es proporcionado
-        if "idpieza" in data:
-            lo_proceso.idpieza = data["idpieza"]
-        if "fechainicial" in data:
-            lo_proceso.fechainicial = data["fechainicial"]
-        if "fechafinal" in data:
-            lo_proceso.fechafinal = data["fechafinal"]
-        if "estado" in data:
-            lo_proceso.estado = data["estado"]
+        # Busco piezas de proceso actual 
+        lo_pieza = lo_proceso.pieza
+        # Actualizo proceso actual a rechazado
+        lo_proceso.estado = 'RECHAZADO'
         if "notas" in data:
             lo_proceso.notas = data["notas"]
-        if "reproceso" in data:
-            lo_proceso.reproceso = data["reproceso"]
-
+            
         lo_proceso.update = int(time())
+        lo_proceso.fechafinal = int(time())
+        lo_proceso.put()        
         
-        lo_proceso.put()
-        msg = {'message': 'Proceso actualizada correctamente.'}
+        # Actualizo historial de proceso actual a rechazado
+        hprocesos = lo_proceso.historialproceso
+        if hprocesos is not None:
+          # Actualizar el estado de la historia de proceso a "REPROCESO"
+          hprocesos.sort(key=lambda lo_hproceso: lo_hproceso.fechaingreso, reverse=True)
+          hproceso = hprocesos[0]
+          
+          hproceso.estado = 'RECHAZADO'
+          hproceso.fechasalida = int(time())
+          if "notas" in data:
+              hproceso.notas = data["notas"]
+              
+          hproceso.update = int(time())
+          hproceso.put()
+        
+        # Crear nuevo proceso
+        lo_proceso_new = Proceso(estado='EN_PROCESO', fechainicial=int(time()), idpieza=lo_pieza.idpieza, created=int(time()), update=None)
+        lo_proceso_new.save()
+          
+        # Obetener la etapa de la pieza
+        etapas_rta = lo_pieza.rutaprdccion.rprdcion_etapas          
+        etapas_rta.sort(key=lambda lo_rprdcion_etapa: lo_rprdcion_etapa.orden)
+        
+        # Crear el historial de la pieza
+        lo_historial = HistorialProceso(estado='REGISTRADO', fechaingreso=int(time()), idetapa=etapas_rta[0].idetapa, idproceso=lo_proceso_new.idproceso, idusuario=get_jwt_identity(), created=int(time()), update=None)
+        lo_historial.save()
+        
+        msg = {'message': 'Proceso rechazado correctamente.'}
       else:
-        msg = {'error': 'No existe el Proceso a actualizar.'}, 404
+        msg = {'error': 'No existe el Proceso a rechazar.'}, 404
     else:
       msg = {'error': 'No existe atributo "idproceso" en payload enviado.'}, 404
 
