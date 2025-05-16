@@ -119,7 +119,7 @@ class HistorialProcesoTerminarHandler(Resource):
           # Busco y actualizo el estado del proceso
           lo_proceso = lo_hproceso.proceso
           lo_proceso.estado = 'TERMINADO'
-          lo_proceso.fechasalida = int(time())
+          lo_proceso.fechafinal = int(time())
           lo_proceso.update = int(time())
           lo_proceso.put()
 
