@@ -17,7 +17,7 @@ from app.handlers.historial_procesos import HistorialProcesoHandler, HistorialPr
 from app.handlers.historial_procesos import HistorialProcesoTerminarHandler
 from app.handlers.efficiency_report import EfficiencyReportHandler
 from app.handlers.general_efficiency_report import GeneralEfficiencyReportHandler
-
+from app.handlers.production_orders_report import ProductionOrdersReportHandler
 
 
 ROUTES = [
@@ -57,6 +57,7 @@ ROUTES = [
   (HistorialProcesoTerminarHandler, '/historialprocesos/terminar'),
   (EfficiencyReportHandler, '/efficiency_report'),
   (GeneralEfficiencyReportHandler, '/general_efficiency_report'),
+  (ProductionOrdersReportHandler, '/production_orders_report'),
 ]
 
 api_bp = Blueprint('api', __name__)
