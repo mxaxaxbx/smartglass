@@ -25,7 +25,6 @@ class HistorialProcesoHandler(Resource):
     except Exception as e:
       return {'error': str(e)}, 500
 
-
   @jwt_required()
   def put(self):
     data = request.json  # Datos enviados en la solicitud
@@ -93,11 +92,79 @@ class HistorialProcesoTerminarHandler(Resource):
     if "idhistorialprocso" in data:
       lo_hproceso = HistorialProceso.query.get(data["idhistorialprocso"])
       if(lo_hproceso is not None):
-        
+        #Actualizo el historial de la orden a terminado      
+        if "notas" in data:
+          lo_hproceso.notas = data["notas"]
+
+        lo_hproceso.estado = 'TERMINADO'
+        lo_hproceso.fechasalida = int(time())
         lo_hproceso.update = int(time())
         
+        userid = get_jwt_identity()
+        lo_hproceso.idusuario = userid
+        
         lo_hproceso.put()
-        msg = {'message': 'Historial de proceso actualizada correctamente.'}
+
+        #Busco las etpas asociados a la pieza
+        rprdcion_etapas = lo_hproceso.proceso.pieza.rutaprdccion.rprdcion_etapas
+        rprdcion_etapa_act = dict()
+        rprdcion_etapa_next = dict()
+
+        for lo_rprdcion_etapa in rprdcion_etapas:
+          if lo_rprdcion_etapa.idetapa == lo_hproceso.idetapa and lo_rprdcion_etapa.id_rutprod == lo_hproceso.proceso.pieza.idrutaprdccion:
+            rprdcion_etapa_act = lo_rprdcion_etapa
+            break
+        
+        if rprdcion_etapa_act.etapafinal == True:
+          # Busco y actualizo el estado del proceso
+          lo_proceso = lo_hproceso.proceso
+          lo_proceso.estado = 'TERMINADO'
+          lo_proceso.fechasalida = int(time())
+          lo_proceso.update = int(time())
+          lo_proceso.put()
+
+          # Busco y actualizo el estado de la pieza
+          lo_pieza = lo_hproceso.proceso.pieza
+          lo_pieza.estado = 'TERMINADO'
+          lo_pieza.update = int(time())
+          lo_pieza.put()
+
+          # Busco y actualizo el estado de la orden
+          lo_orden = lo_hproceso.proceso.pieza.orden
+          piezas = lo_orden.piezas
+
+          l_piezas_terminadas = False
+          for lo_pieza_t in piezas:
+            if lo_pieza_t.estado == 'TERMINADO':
+              l_piezas_terminadas = True
+            else:
+              l_piezas_terminadas = False
+              break
+          
+          if l_piezas_terminadas == True:
+            lo_orden.estado = 'TERMINADO'
+            lo_orden.update = int(time())
+            lo_orden.put()
+
+        else:
+          #Busco la etapa asociada al historial del proceso
+          l_is_ok = False
+          orden = rprdcion_etapa_act.orden + 1
+
+          for lo_rprdcion_etapa in rprdcion_etapas:
+            if lo_rprdcion_etapa.orden == orden and lo_rprdcion_etapa.id_rutprod == lo_hproceso.proceso.pieza.idrutaprdccion:
+              rprdcion_etapa_next = lo_rprdcion_etapa              
+              l_is_ok = True
+              break
+          
+          # Inserto el registro para que se vea en la siguiente etapa
+          if l_is_ok == True:
+            lo_hproceso_new = HistorialProceso(estado='REGISTRADO', fechaingreso=int(time()), fechasalida=None, idetapa=rprdcion_etapa_next.idetapa, idproceso=lo_hproceso.idproceso, idusuario=userid, notas=None, created=int(time()), update=None)
+            lo_hproceso_new.save()
+        
+        #msg = rprdcion_etapa_next.serialize()
+        #msg = {'o': orden, 'entro': ent}
+        msg = {'message': 'Historial de proceso actualizado correctamente.'}
       else:
         msg = {'error': 'No existe el Historial de Proceso a actualizar.'}, 404
     else:
