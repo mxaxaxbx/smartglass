@@ -11,7 +11,7 @@ class Etapa(db.Model):
   etapafinal = db.Column(db.Boolean, nullable=False)
   created = db.Column(db.Integer, nullable=False)
   update = db.Column(db.Integer, nullable=False)
-  hsProcesos = db.relationship("HistorialProceso", backref='historialproceso', lazy=True)
+  hsProcesos = db.relationship("HistorialProceso", backref='etapas', lazy=True)
 
   def save(self):
     db.session.add(self)
