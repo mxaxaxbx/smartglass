@@ -11,7 +11,6 @@ app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 database_uri = getenv('DATABASE_URL')
-print("database_uri", database_uri)
 app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
 
 db = SQLAlchemy(app)
