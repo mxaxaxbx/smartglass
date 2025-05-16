@@ -25,21 +25,9 @@ class EfficiencyReportHandler(Resource):
         a.idarea,
         a.nombre AS nombre_area,
         COUNT(DISTINCT pi.idpieza) AS total_piezas,
-        ROUND(
-          COUNT(distinct case when hp.estado = 'TERMINADO' then pi.idpieza end)::numeric /
-          nullif(count(distinct pi.idpieza), 0)::numeric * 100,
-          2
-        ) as porcentaje_terminadas,
-        ROUND(
-            COUNT(DISTINCT CASE WHEN hp.estado = 'RECHAZADA' THEN pi.idpieza END)::NUMERIC / 
-            NULLIF(COUNT(DISTINCT pi.idpieza), 0)::NUMERIC * 100, 
-            2
-        ) AS porcentaje_rechazadas,
-        ROUND(
-            COUNT(DISTINCT CASE WHEN p.reproceso = true THEN pi.idpieza END)::NUMERIC / 
-            NULLIF(COUNT(DISTINCT pi.idpieza), 0)::NUMERIC * 100, 
-            2
-        ) AS porcentaje_reprocesadas
+        COUNT(distinct case when hp.estado = 'TERMINADO' then pi.idpieza end)::numeric as piezas_terminadas,
+        COUNT(DISTINCT CASE WHEN hp.estado = 'RECHAZADA' THEN pi.idpieza END)::NUMERIC as piezas_rechazadas,
+        COUNT(DISTINCT CASE WHEN p.reproceso = true THEN pi.idpieza END)::NUMERIC AS piezas_reprocesadas
     FROM 
         smartglass.etapas e 
         INNER JOIN smartglass.areas a ON a.idarea = e.areaid
@@ -66,9 +54,9 @@ class EfficiencyReportHandler(Resource):
         "idarea": row[2],
         "nombre_area": row[3],
         "total_piezas": row[4],
-        "porcentaje_terminadas": float(row[5]),
-        "porcentaje_rechazadas": float(row[6]),
-        "porcentaje_reprocesadas": float(row[7]),
+        "piezas_terminadas": float(row[5]),
+        "piezas_rechazadas": float(row[6]),
+        "piezas_reprocesadas": float(row[7]),
       }
       for row in result
     ], 200
