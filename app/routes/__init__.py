@@ -13,7 +13,7 @@ from app.handlers.areas import AreasHandler, AreaIDHandler;
 from app.handlers.etapas import EtapasHandler, EtapaIDHandler;
 from app.handlers.rprdcion_etapas import RPrdcion_EtapasHandler, RtaPrdEtpaIDHandler, EtapasRtaPrdIDHandler;
 from app.handlers.procesos import ProcesoHandler, ProcesoIDHandler;
-from app.handlers.historial_procesos import HistorialProcesoHandler, HistorialProcesoIDHandler, HistorialProcesoUserIDHandler;
+from app.handlers.historial_procesos import HistorialProcesoHandler, HistorialProcesoIDHandler, HistorialProcesoUserIDHandler, HistorialProcesoTerminarHandler;
 
 
 ROUTES = [
@@ -50,7 +50,7 @@ ROUTES = [
   (HistorialProcesoHandler, '/historialprocesos'),
   (HistorialProcesoIDHandler, '/historialprocesos/<h_proceso_id>'),
   (HistorialProcesoUserIDHandler, '/historialprocesos/usuario/<int:user_id>'),
-
+  (HistorialProcesoTerminarHandler, '/historialprocesos/terminar'),
 ]
 
 api_bp = Blueprint('api', __name__)
